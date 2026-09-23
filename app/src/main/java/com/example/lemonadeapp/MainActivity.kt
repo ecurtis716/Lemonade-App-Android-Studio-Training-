@@ -63,7 +63,7 @@ fun LemonadeApp() {
                         fontWeight = FontWeight.Bold
                     )
                 },
-                colors = TopAppBarDefaults.largeTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Yellow,
                     titleContentColor = Color.Black
                 )
@@ -99,8 +99,20 @@ fun LemonadeStep(modifier: Modifier = Modifier) {
         3 -> R.string.glass_of_lemonade
         else -> R.string.empty_glass
     }
+    var squeezeNumber by remember { mutableStateOf((2..4).random()) }
+    var squeezeStep = 1
     val stepFunction = {
-        step++
+        if (step % 4 != 2) {
+            step++
+        } else {
+            if (squeezeStep >= squeezeNumber) {
+                squeezeStep = 1
+                squeezeNumber = (2..4).random()
+                step++
+            } else {
+                squeezeStep++
+            }
+        }
     }
     Column(
         modifier = modifier,
